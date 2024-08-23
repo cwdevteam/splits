@@ -12,7 +12,7 @@ const ComponentLayout = ({
   chainId,
   width = 'md',
   theme = 'system',
-}: IComponentLayout): JSX.Element => {
+}: any): JSX.Element => {
   const widthValue = {
     xs: '20rem',
     sm: '24rem',

@@ -61,14 +61,12 @@ const AddressInput = <FormType extends FieldValues>({
   const { data, isError, isLoading } = useEnsName({
     address: inputVal,
     chainId,
-    enabled: inputVal && isAddress(inputVal),
   })
 
   const { data: ensResolverData, isLoading: ensResolverLoading } =
     useEnsAddress({
       name: inputVal,
       chainId,
-      enabled: inputVal && inputVal.endsWith('.eth'),
     })
 
   const onValidEns = useCallback(

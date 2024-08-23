@@ -15,9 +15,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "storybook dev -c storybook -p 6006",
-    "build-storybook": "storybook build -c storybook"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "0xSplits (https://splits.org)",
   "publishConfig": {

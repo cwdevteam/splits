@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { RequestError } from '@0xsplits/splits-sdk-react/dist/types'
 import { useDistributeToken } from '@0xsplits/splits-sdk-react'
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount } from 'wagmi'
 
 import { displayBigNumber } from '../../utils/display'
 import Tooltip from '../util/Tooltip'
@@ -26,8 +26,7 @@ function DistributeBalance({
   onError?: (error: RequestError) => void
 }) {
   const { distributeToken, status, error } = useDistributeToken()
-  const { isConnected, address: connectedAddress } = useAccount()
-  const { chain } = useNetwork()
+  const { chain, isConnected, address: connectedAddress } = useAccount()
 
   useEffect(() => {
     if (error) {
