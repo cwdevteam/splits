@@ -37,7 +37,6 @@ const CreateSplit = ({
   theme = 'system',
   displayChain = true,
   onSuccess,
-  onError,
 }: ICreateSplitProps) => {
   return (
     <ComponentLayout
@@ -58,7 +57,6 @@ const CreateSplit = ({
           defaultDistributorFeeOptions={defaultDistributorFeeOptions}
           chainId={chainId}
           onSuccess={onSuccess}
-          onError={onError}
         />
       }
     />

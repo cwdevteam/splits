@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react'
-import Link from './Link'
 import { CHAIN_INFO } from '../../constants/chains'
-import SplitsLogo from './SplitsLogo'
 
 const ComponentLayout = ({
-  title,
-  titleButton,
   body,
-  corner,
   error,
   chainId,
   width = 'md',
@@ -67,13 +62,6 @@ const ComponentLayout = ({
       <div
         className={`w-full grid font-sans text-left text-sm min-h-[18rem] dark:text-white border rounded bg-white dark:bg-black border-gray-200 dark:border-gray-700 divide-y dark:divide-gray-700 divide-gray-200`}
       >
-        <div className="px-4 py-3.5 flex items-center justify-between space-x-2 rounded-t overflow-hidden">
-          <div className="flex items-center overflow-x-hidden ">
-            {title && <div className="font-medium">{title}</div>}
-            {titleButton && <div className="">{titleButton}</div>}
-          </div>
-          {corner && <div className="">{corner}</div>}
-        </div>
         <div className="p-4">
           {errorDisplay ? (
             <div className="text-center my-8 space-y-2">
@@ -83,18 +71,6 @@ const ComponentLayout = ({
           ) : (
             body
           )}
-        </div>
-        <div className="p-4 self-end flex items-center justify-between text-xs bg-gray-50 dark:bg-[#1f1f1f] rounded-b">
-          <div className="flex space-x-2 items-center">
-            <SplitsLogo dark={isDark} />
-            <div className="font-medium">Powered by Splits</div>
-          </div>
-          <Link
-            href="https://splits.org"
-            className="text-gray-500 dark:text-gray-400"
-          >
-            splits.org
-          </Link>
         </div>
       </div>
     </div>
