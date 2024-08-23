@@ -1,5 +1,4 @@
 {
-  "baseUrl": "./src",
   "compilerOptions": {
     "module": "ESNext",
     "outDir": "./dist",
@@ -24,17 +23,15 @@
       }
     ]
   },
+   "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
   "include": [
-    "./src",
-    ".next/types/**/*.ts"
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx"
   ],
-  "exclude": [
-    "dist",
-    "node_modules"
-  ],
-  "paths": {
-    "@/*": [
-      "src/*"
-    ]
-  }
+  "exclude": ["node_modules"]
 }

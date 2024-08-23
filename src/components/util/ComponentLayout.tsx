@@ -3,25 +3,6 @@ import Link from './Link'
 import { CHAIN_INFO } from '../../constants/chains'
 import SplitsLogo from './SplitsLogo'
 
-interface IComponentLayout {
-  title?: string | JSX.Element
-  count?: string | JSX.Element | false
-  titleButton?: JSX.Element
-  body: JSX.Element
-  tooltip?: string | JSX.Element
-  corner?: string | JSX.Element | false
-  showTooltipOnContentHover?: boolean
-  error?:
-    | {
-        title: string | JSX.Element
-        body: string | JSX.Element
-      }
-    | false
-  chainId?: number
-  width?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  theme?: 'light' | 'dark' | 'system'
-}
-
 const ComponentLayout = ({
   title,
   titleButton,
@@ -41,16 +22,22 @@ const ComponentLayout = ({
     full: '100%',
   }
 
-  const mq = window.matchMedia('(prefers-color-scheme: dark)')
-  const [userPrefersDark, setUserPrefersDark] = useState(mq.matches)
-
-  const handleThemeChange = (evt: MediaQueryListEvent) => {
-    setUserPrefersDark(evt.matches)
-  }
+  const [userPrefersDark, setUserPrefersDark] = useState(false)
 
   useEffect(() => {
-    mq.addEventListener('change', handleThemeChange)
-    return () => mq.removeEventListener('change', handleThemeChange)
+    // Check if `window` is available (i.e., code is running in the browser)
+    if (typeof window !== 'undefined') {
+      const mq = window.matchMedia('(prefers-color-scheme: dark)')
+      setUserPrefersDark(mq.matches)
+
+      const handleThemeChange = (evt: MediaQueryListEvent) => {
+        setUserPrefersDark(evt.matches)
+      }
+
+      mq.addEventListener('change', handleThemeChange)
+
+      return () => mq.removeEventListener('change', handleThemeChange)
+    }
   }, [])
 
   const themeClass = {

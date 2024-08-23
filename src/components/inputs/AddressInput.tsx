@@ -80,11 +80,6 @@ const AddressInput = <FormType extends FieldValues>({
     [inputName, inputVal, setValue],
   )
 
-  const onInvalidEns = useCallback(() => {
-    setAddressEns('')
-    setError(inputName, { type: 'ensFailure', message: `ENS not found` })
-  }, [inputName, setError])
-
   const onValidAddressWithEns = useCallback(
     (ens: string) => setAddressEns(ens),
     [],
@@ -97,9 +92,8 @@ const AddressInput = <FormType extends FieldValues>({
 
   useEffect(() => {
     if ((inputVal && inputVal.endsWith('.eth')) || isLoading) return
-    if (isError) onInvalidEns()
     if (data) onValidAddressWithEns(data)
-  }, [data, inputVal, isError, isLoading, onInvalidEns, onValidAddressWithEns])
+  }, [data, inputVal, isError, isLoading, onValidAddressWithEns])
 
   const clearInput = useCallback(() => {
     const typedAddress = '' as PathValue<FormType, Path<FormType>>

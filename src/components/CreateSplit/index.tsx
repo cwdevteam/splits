@@ -1,3 +1,5 @@
+'use client'
+
 import { CHAIN_INFO, SupportedChainId } from '../../constants/chains'
 import { RequestError } from '@0xsplits/splits-sdk-react/dist/types'
 import CreateSplitForm from '../CreateSplit/CreateSplitForm'

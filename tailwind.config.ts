@@ -6,6 +6,8 @@ module.exports = {
   content: [
     './public/**/*.html',
     './src/**/*.{js,jsx,ts,tsx}',
+    './app/*.{js,jsx,ts,tsx}',
+    './app/**/*.{js,jsx,ts,tsx}',
     // TODO: Figure out how to purge storybook css in production build
     './storybook/**/*.{js,jsx,ts,tsx}',
   ],

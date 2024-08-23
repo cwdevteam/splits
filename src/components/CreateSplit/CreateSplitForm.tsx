@@ -1,9 +1,8 @@
 import { useCallback, useEffect } from 'react'
 import { RequestError } from '@0xsplits/splits-sdk-react/dist/types'
-import { useCreateSplit } from '@0xsplits/splits-sdk-react'
 import { CreateSplitConfig } from '@0xsplits/splits-sdk'
 import { useForm, FormProvider } from 'react-hook-form'
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount, useSwitchChain } from 'wagmi'
 import { sum, uniq } from 'lodash'
 
 import { ControllerSelector } from '../CreateSplit/ControllerSelector'
@@ -18,6 +17,8 @@ import Tooltip from '../util/Tooltip'
 import Button from '../util/Button'
 import Link from '../util/Link'
 import { Log } from 'viem'
+import { baseSepolia } from 'viem/chains'
+import useCreateSplit from '../../../hooks/useCreateSplit'
 
 const CreateSplitForm = ({
   chainId,
@@ -36,18 +37,10 @@ const CreateSplitForm = ({
   onSuccess?: (events: Log[]) => void
   onError?: (error: RequestError) => void
 }) => {
-  const { createSplit, error } = useCreateSplit()
+  const { createSplit } = useCreateSplit()
+  const { switchChain } = useSwitchChain()
 
-  useEffect(() => {
-    if (error) {
-      // eslint-disable-next-line no-console
-      console.error(error)
-      onError && onError(error)
-    }
-  }, [error, onError])
-
-  const { isConnected, address: connectedAddress } = useAccount()
-  const { chain } = useNetwork()
+  const { isConnected, address: connectedAddress, chain } = useAccount()
 
   const form = useForm<ICreateSplitForm>({
     mode: 'onChange',
@@ -69,15 +62,16 @@ const CreateSplitForm = ({
 
   const onSubmit = useCallback(
     async (data: ICreateSplitForm) => {
+      await switchChain({ chainId: baseSepolia.id })
+      console.log('SWEETS CREATING SPLIT')
       const args: CreateSplitConfig = {
         recipients: data.recipients,
         distributorFeePercent: data.distributorFee,
         controller: data.controller,
       }
+      console.log('SWEETS args', args)
       const result = await createSplit(args)
-      if (result) {
-        onSuccess && onSuccess(result)
-      }
+      console.log('SWEETS result', result)
     },
     [createSplit, onSuccess],
   )
@@ -88,8 +82,7 @@ const CreateSplitForm = ({
 
   const isFullyAllocated = recipientAllocationTotal === 100
   const isWrongChain = chain && chainId !== chain.id
-  const isButtonDisabled =
-    !isConnected || isWrongChain || !isFormValid || !isFullyAllocated
+  const isButtonDisabled = !isConnected || !isFormValid || !isFullyAllocated
 
   const formData = watch()
   const createOnSplitsAppLink = `https://app.splits.org/new/split?${getSplitRouterParams(
