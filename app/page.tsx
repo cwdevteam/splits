@@ -2,30 +2,16 @@
 
 import React from 'react'
 import CreateSplit from '../src/components/CreateSplit'
-import { WagmiProvider } from 'wagmi'
-import { SplitsProvider } from '@0xsplits/splits-sdk-react'
-import config from '../src/utils/wagmi/config'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import '../style/global.css'
-import LoginButton from '../src/components/CreateSplit/ConnectButton'
-
-const queryClient = new QueryClient()
-
-const splitsConfig = {
-  chainId: 1,
-  publicClient: (config as any).publicClient,
-}
+import Providers from '../providers/Providers'
 
 export default function Page() {
   return (
-    <WagmiProvider config={config}>
-      <QueryClientProvider client={queryClient}>
-        <SplitsProvider config={splitsConfig}>
-          <h1>Mesa Splits</h1>
-          <LoginButton />
-          <CreateSplit chainId={8453} />
-        </SplitsProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+    <Providers>
+      <div className="flex flex-col justify-center items-center h-screen">
+        <h1>Mesa Splits</h1>
+        <CreateSplit chainId={8453} />
+      </div>
+    </Providers>
   )
 }
