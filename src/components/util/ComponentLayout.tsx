@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react'
 import { CHAIN_INFO } from '../../constants/chains'
 
+const widthValue = {
+  xs: '20rem',
+  sm: '24rem',
+  md: '28rem',
+  lg: '32rem',
+  xl: '36rem',
+  full: '100%',
+}
+
 const ComponentLayout = ({
-  body,
   error,
   chainId,
   width = 'md',
   theme = 'system',
+  children,
 }: any): JSX.Element => {
-  const widthValue = {
-    xs: '20rem',
-    sm: '24rem',
-    md: '28rem',
-    lg: '32rem',
-    xl: '36rem',
-    full: '100%',
-  }
-
   const [userPrefersDark, setUserPrefersDark] = useState(false)
 
   useEffect(() => {
@@ -55,13 +55,8 @@ const ComponentLayout = ({
   const isDark = themeClass[theme] === 'dark'
 
   return (
-    <div
-      className={`${themeClass[theme]}`}
-      style={{ width: widthValue[width] }}
-    >
-      <div
-        className={`w-full grid font-sans text-left text-sm min-h-[18rem] dark:text-white border rounded bg-white dark:bg-black border-gray-200 dark:border-gray-700 divide-y dark:divide-gray-700 divide-gray-200`}
-      >
+    <div className={themeClass[theme]} style={{ width: widthValue[width] }}>
+      <div className="w-full grid font-sans text-left text-sm min-h-[18rem] dark:text-white border rounded bg-white dark:bg-black border-gray-200 dark:border-gray-700 divide-y dark:divide-gray-700 divide-gray-200">
         <div className="p-4">
           {errorDisplay ? (
             <div className="text-center my-8 space-y-2">
@@ -69,7 +64,7 @@ const ComponentLayout = ({
               <div className="text-xs max-w-md">{errorDisplay.body}</div>
             </div>
           ) : (
-            body
+            children
           )}
         </div>
       </div>
