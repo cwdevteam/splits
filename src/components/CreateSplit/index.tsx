@@ -49,17 +49,16 @@ const CreateSplit = ({
           ? CHAIN_INFO[chainId] && <ChainLogo chainInfo={CHAIN_INFO[chainId]} />
           : undefined
       }
-      body={
-        <CreateSplitForm
-          defaultDistributorFee={defaultDistributorFee}
-          defaultController={defaultController}
-          defaultRecipients={defaultRecipients}
-          defaultDistributorFeeOptions={defaultDistributorFeeOptions}
-          chainId={chainId}
-          onSuccess={onSuccess}
-        />
-      }
-    />
+    >
+      <CreateSplitForm
+        defaultDistributorFee={defaultDistributorFee}
+        defaultController={defaultController}
+        defaultRecipients={defaultRecipients}
+        defaultDistributorFeeOptions={defaultDistributorFeeOptions}
+        chainId={chainId}
+        onSuccess={onSuccess}
+      />
+    </ComponentLayout>
   )
 }
 

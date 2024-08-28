@@ -8,9 +8,9 @@ import Providers from '../providers/Providers'
 export default function Page() {
   return (
     <Providers>
-      <div className="flex flex-col justify-center items-center h-screen">
+      <div className="flex flex-col justify-center items-center h-screen max-w-lg mx-auto">
         <h1>Mesa Splits</h1>
-        <CreateSplit chainId={8453} />
+        <CreateSplit chainId={8453} width="full" />
       </div>
     </Providers>
   )
