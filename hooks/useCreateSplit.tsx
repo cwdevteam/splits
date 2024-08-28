@@ -1,9 +1,9 @@
-import { baseSepolia } from 'viem/chains'
 import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 import { pullSplitFactoryAbi } from '../src/components/util/pullSplitFactoryAbi'
 import { getRecipientSortedAddressesAndAllocations } from '@0xsplits/splits-sdk/utils'
 import { Address, parseEventLogs, zeroAddress } from 'viem'
 import { useState } from 'react'
+import { CHAIN } from '../src/constants/chains'
 
 const useCreateSplit = () => {
   const [result, setResult] = useState<Address>()
@@ -26,7 +26,7 @@ const useCreateSplit = () => {
 
       const transactionHash = await writeContractAsync({
         account: address,
-        chain: baseSepolia,
+        chain: CHAIN,
         address: pullSplitFactory,
         abi: pullSplitFactoryAbi,
         functionName: 'createSplit',

@@ -18,6 +18,8 @@ import {
   baseSepolia,
 } from 'viem/chains'
 
+export const CHAIN = process.env.NEXT_PUBLIC_TESTNET ? baseSepolia : base
+
 export const SupportedChainsList = [
   mainnet,
   goerli,
