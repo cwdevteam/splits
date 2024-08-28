@@ -17,11 +17,9 @@ const useCreateSplit = () => {
   const createSplit = async (args) => {
     setLoading(true)
     try {
-      console.log('SWEETS ARGS', args)
       const recipients = getRecipientSortedAddressesAndAllocations(
         args.recipients,
       )
-      console.log('SWEETS recipients', recipients)
 
       const pullSplitFactory =
         '0x80f1B766817D04870f115fEBbcCADF8DBF75E017' as Address

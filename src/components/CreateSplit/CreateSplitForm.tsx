@@ -57,13 +57,11 @@ const CreateSplitForm = ({
   const onSubmit = useCallback(
     async (data: ICreateSplitForm) => {
       await switchChain({ chainId: baseSepolia.id })
-      console.log('SWEETS CREATING SPLIT')
       const args: CreateSplitConfig = {
         recipients: data.recipients,
         distributorFeePercent: data.distributorFee,
         controller: data.controller,
       }
-      console.log('SWEETS args', args)
       await createSplit(args)
     },
     [createSplit, onSuccess],
