@@ -15,7 +15,10 @@ import {
   base,
   zora,
   zoraTestnet,
+  baseSepolia,
 } from 'viem/chains'
+
+export const CHAIN = process.env.NEXT_PUBLIC_TESTNET ? baseSepolia : base
 
 export const SupportedChainsList = [
   mainnet,
@@ -34,6 +37,7 @@ export const SupportedChainsList = [
   zora,
   zoraTestnet,
   base,
+  baseSepolia,
 ]
 
 type SupportedChain = (typeof SupportedChainsList)[number]
@@ -159,6 +163,13 @@ export const CHAIN_INFO: ChainInfo = {
   },
   [base.id]: {
     label: 'Base',
+    logoUrl: '/networks/base_logo.svg',
+    nativeCurrency: {
+      symbol: 'ETH',
+    },
+  },
+  [baseSepolia.id]: {
+    label: 'Base Sepolia',
     logoUrl: '/networks/base_logo.svg',
     nativeCurrency: {
       symbol: 'ETH',

@@ -9,7 +9,6 @@ import RecipientSetter from '../CreateSplit/RecipientSetter'
 import Tooltip from '../util/Tooltip'
 import Button from '../util/Button'
 import { Log } from 'viem'
-import { baseSepolia } from 'viem/chains'
 import useCreateSplit from '../../../hooks/useCreateSplit'
 import LoginButton from './ConnectButton'
 import CheckBadgeIcon from '@heroicons/react/20/solid/CheckBadgeIcon'
@@ -36,7 +35,7 @@ const CreateSplitForm = ({
     loading: creatingSplit,
     result: split,
   } = useCreateSplit()
-  const { switchChain } = useSwitchChain()
+  const { switchChainAsync } = useSwitchChain()
   const { isConnected, chain } = useAccount()
 
   const form = useForm<ICreateSplitForm>({
@@ -56,7 +55,7 @@ const CreateSplitForm = ({
 
   const onSubmit = useCallback(
     async (data: ICreateSplitForm) => {
-      await switchChain({ chainId: baseSepolia.id })
+      await switchChainAsync({ chainId })
       const args: CreateSplitConfig = {
         recipients: data.recipients,
         distributorFeePercent: data.distributorFee,

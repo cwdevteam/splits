@@ -1,16 +1,16 @@
-import { baseSepolia } from 'viem/chains'
 import { useAccount, usePublicClient, useWriteContract } from 'wagmi'
 import { pullSplitFactoryAbi } from '../src/components/util/pullSplitFactoryAbi'
 import { getRecipientSortedAddressesAndAllocations } from '@0xsplits/splits-sdk/utils'
 import { Address, parseEventLogs, zeroAddress } from 'viem'
 import { useState } from 'react'
+import { CHAIN } from '../src/constants/chains'
 
 const useCreateSplit = () => {
   const [result, setResult] = useState<Address>()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string>()
 
-  const { writeContract } = useWriteContract()
+  const { writeContractAsync } = useWriteContract()
   const { address } = useAccount()
   const publicClient = usePublicClient()
 
@@ -24,31 +24,24 @@ const useCreateSplit = () => {
       const pullSplitFactory =
         '0x80f1B766817D04870f115fEBbcCADF8DBF75E017' as Address
 
-      const transactionHash = await new Promise<Address>((res, rej) =>
-        writeContract(
+      const transactionHash = await writeContractAsync({
+        account: address,
+        chain: CHAIN,
+        address: pullSplitFactory,
+        abi: pullSplitFactoryAbi,
+        functionName: 'createSplit',
+        args: [
           {
-            account: address,
-            chain: baseSepolia,
-            address: pullSplitFactory,
-            abi: pullSplitFactoryAbi,
-            functionName: 'createSplit',
-            args: [
-              {
-                recipients: recipients[0],
-                allocations: recipients[1],
-                totalAllocation: BigInt(1000000),
-                distributionIncentive: 0,
-              },
-              zeroAddress,
-              zeroAddress,
-            ],
+            recipients: recipients[0],
+            allocations: recipients[1],
+            totalAllocation: BigInt(1000000),
+            distributionIncentive: 0,
           },
-          {
-            onSuccess: res,
-            onError: rej,
-          },
-        ),
-      )
+          zeroAddress,
+          zeroAddress,
+        ],
+      })
+
       const transaction = await publicClient.waitForTransactionReceipt({
         hash: transactionHash,
       })
