@@ -5,8 +5,6 @@ const useConnectWallet = () => {
 
   const { connectors, connect } = useConnect()
   const connector = connectors[0]
-  console.log('SWEETS address', address)
-  console.log('SWEETS connector', connector)
 
   const connectWallet = () => connect({ connector })
 
