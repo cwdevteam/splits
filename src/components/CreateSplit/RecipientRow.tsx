@@ -2,7 +2,6 @@ import { XMarkIcon } from '@heroicons/react/20/solid'
 import { useFormContext } from 'react-hook-form'
 import { isAddress } from 'viem'
 
-import { SupportedChainId } from '../../constants/chains'
 import AddressInput from '../inputs/AddressInput'
 import { SecondaryButton } from '../util/Button'
 import NumberInput from '../inputs/NumberInput'
@@ -11,11 +10,9 @@ import { ICreateSplitForm } from '../../types'
 export const RecipientRow = ({
   index,
   onRemove,
-  chainId,
 }: {
   index: number
   onRemove?: () => void
-  chainId: SupportedChainId
 }) => {
   const { control, getValues, setValue, setError } =
     useFormContext<ICreateSplitForm>()
@@ -36,7 +33,6 @@ export const RecipientRow = ({
     <fieldset>
       <div className={'flex items-stretch space-x-3'}>
         <AddressInput
-          chainId={chainId}
           control={control}
           inputName={`recipients.${index}.address`}
           placeholder="Enter address"
