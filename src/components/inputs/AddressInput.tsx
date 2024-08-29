@@ -15,12 +15,12 @@ import { XMarkIcon } from '@heroicons/react/20/solid'
 import { Dictionary } from 'lodash'
 
 import { MiniButton } from '../util/Button'
-import { shortenAddress, shortenENS } from '../../utils/address'
-import { useEnsName, useEnsAddress } from 'wagmi'
+import { shortenAddress } from '../../utils/address'
 import { IAddress } from '../../types'
-import { CHAIN } from '../../constants/chains'
 import { isAddress } from 'viem'
 import ValidAddressDisplay from '../ValidAddressDisplay'
+import viemClient from '../../../src/utils/viem/client'
+import { normalize } from 'viem/ens'
 
 const AddressInput = <FormType extends FieldValues>({
   control,
@@ -56,40 +56,31 @@ const AddressInput = <FormType extends FieldValues>({
   })
   const error = getNestedObj(errors, inputName) as FieldError
 
-  const { data, isError, isLoading } = useEnsName({
-    address: inputVal,
-    chainId: CHAIN.id,
-  })
-
-  const { data: ensResolverData, isLoading: ensResolverLoading } =
-    useEnsAddress({
-      name: inputVal,
-      chainId: CHAIN.id,
-    })
-
-  const onValidEns = useCallback(
-    (address: string) => {
-      setAddressEns(inputVal)
-      const typedAddress = address as PathValue<FormType, Path<FormType>>
-      setValue(inputName, typedAddress, { shouldValidate: true })
-    },
-    [inputName, inputVal, setValue],
-  )
-
-  const onValidAddressWithEns = useCallback(
-    (ens: string) => setAddressEns(ens),
-    [],
-  )
-
   useEffect(() => {
-    if ((inputVal && !inputVal.endsWith('.eth')) || ensResolverLoading) return
-    if (ensResolverData) onValidEns(ensResolverData)
-  }, [ensResolverData, ensResolverLoading, inputVal, onValidEns])
-
-  useEffect(() => {
-    if ((inputVal && inputVal.endsWith('.eth')) || isLoading) return
-    if (data) onValidAddressWithEns(data)
-  }, [data, inputVal, isError, isLoading, onValidAddressWithEns])
+    const checkEns = async () => {
+      if (
+        inputVal &&
+        ['.eth', '.cb.id'].find((ext) => inputVal.endsWith(ext))
+      ) {
+        const address = await viemClient.getEnsAddress({
+          name: normalize(inputVal),
+        })
+        if (address) {
+          const typedAddress = address as PathValue<FormType, Path<FormType>>
+          setAddressEns(inputVal)
+          setValue(inputName, typedAddress, { shouldValidate: true })
+        }
+      } else if (isAddress(inputVal)) {
+        const ensName = await viemClient.getEnsName({
+          address: inputVal,
+        })
+        if (ensName) {
+          setAddressEns(ensName)
+        }
+      }
+    }
+    checkEns()
+  }, [inputVal])
 
   const clearInput = useCallback(() => {
     const typedAddress = '' as PathValue<FormType, Path<FormType>>
