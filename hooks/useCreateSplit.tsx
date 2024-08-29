@@ -12,7 +12,7 @@ const useCreateSplit = () => {
 
   const { writeContractAsync } = useWriteContract()
   const { address } = useAccount()
-  const publicClient = usePublicClient()
+  const publicClient = usePublicClient({ chainId: CHAIN.id })
 
   const createSplit = async (args) => {
     setLoading(true)
