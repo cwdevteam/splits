@@ -18,9 +18,8 @@ import { MiniButton } from '../util/Button'
 import { shortenAddress, shortenENS } from '../../utils/address'
 import { useEnsName, useEnsAddress } from 'wagmi'
 import { IAddress } from '../../types'
-import { SupportedChainId } from '../../constants/chains'
+import { CHAIN } from '../../constants/chains'
 import { isAddress } from 'viem'
-import SplitsAvatar from '../util/SplitsAvatar'
 import ValidAddressDisplay from '../ValidAddressDisplay'
 
 const AddressInput = <FormType extends FieldValues>({
@@ -33,7 +32,6 @@ const AddressInput = <FormType extends FieldValues>({
   onClearInput,
   autoFocus,
   validAddressDisplay,
-  chainId = 1,
 }: {
   control: Control<FormType>
   inputName: Path<FormType>
@@ -46,7 +44,6 @@ const AddressInput = <FormType extends FieldValues>({
   onClearInput?: () => void
   autoFocus?: boolean
   validAddressDisplay?: (address: string) => JSX.Element
-  chainId?: SupportedChainId
 }): JSX.Element => {
   const [addressEns, setAddressEns] = useState('')
   const inputVal = useWatch({
@@ -61,13 +58,13 @@ const AddressInput = <FormType extends FieldValues>({
 
   const { data, isError, isLoading } = useEnsName({
     address: inputVal,
-    chainId,
+    chainId: CHAIN.id,
   })
 
   const { data: ensResolverData, isLoading: ensResolverLoading } =
     useEnsAddress({
       name: inputVal,
-      chainId,
+      chainId: CHAIN.id,
     })
 
   const onValidEns = useCallback(

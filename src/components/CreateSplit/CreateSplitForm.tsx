@@ -3,7 +3,7 @@ import { CreateSplitConfig } from '@0xsplits/splits-sdk'
 import { useForm, FormProvider } from 'react-hook-form'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { sum } from 'lodash'
-import { CHAIN_INFO, SupportedChainId } from '../../constants/chains'
+import { CHAIN } from '../../constants/chains'
 import { IAddress, Recipient, ICreateSplitForm } from '../../types'
 import RecipientSetter from '../CreateSplit/RecipientSetter'
 import Tooltip from '../util/Tooltip'
@@ -17,13 +17,11 @@ import ValidAddressDisplay from '../ValidAddressDisplay'
 import copyToClipboard from '../../utils/copyToClipboard'
 
 const CreateSplitForm = ({
-  chainId,
   defaultDistributorFee,
   defaultRecipients,
   defaultController,
   onSuccess,
 }: {
-  chainId: SupportedChainId
   defaultDistributorFee: number
   defaultController: IAddress
   defaultRecipients: Recipient[]
@@ -55,7 +53,7 @@ const CreateSplitForm = ({
 
   const onSubmit = useCallback(
     async (data: ICreateSplitForm) => {
-      await switchChainAsync({ chainId })
+      await switchChainAsync({ chainId: CHAIN.id })
       const args: CreateSplitConfig = {
         recipients: data.recipients,
         distributorFeePercent: data.distributorFee,
@@ -71,7 +69,7 @@ const CreateSplitForm = ({
   )
 
   const isFullyAllocated = recipientAllocationTotal === 100
-  const isWrongChain = chain && chainId !== chain.id
+
   const isButtonDisabled =
     !isConnected || !isFormValid || !isFullyAllocated || creatingSplit
 
@@ -79,17 +77,11 @@ const CreateSplitForm = ({
     <div className="space-y-8 flex flex-col">
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-          <RecipientSetter chainId={chainId} />
+          <RecipientSetter />
           <div className="my-5 flex flex-col space-y-1 text-center">
             <Tooltip
-              isDisabled={isConnected && !isWrongChain}
-              content={
-                isWrongChain
-                  ? `Switch to ${CHAIN_INFO[chainId].label} to distribute funds`
-                  : !isConnected
-                  ? 'Connect wallet'
-                  : ''
-              }
+              isDisabled={isConnected}
+              content={!isConnected ? 'Connect wallet' : ''}
             >
               {isConnected ? (
                 <Button

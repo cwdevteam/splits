@@ -1,12 +1,10 @@
 'use client'
 
-import { CHAIN_INFO, SupportedChainId } from '../../constants/chains'
 import { RequestError } from '@0xsplits/splits-sdk-react/dist/types'
 import CreateSplitForm from '../CreateSplit/CreateSplitForm'
 import { ADDRESS_ZERO } from '../../constants/addresses'
 import ComponentLayout from '../util/ComponentLayout'
 import { IAddress, Recipient } from '../../types'
-import ChainLogo from '../util/ChainLogo'
 import {
   DEFAULT_DISTRIBUTOR_FEE,
   DEFAULT_DISTRIBUTOR_FEE_OPTIONS,
@@ -15,7 +13,6 @@ import {
 import { Log } from 'viem'
 
 export interface ICreateSplitProps {
-  chainId: SupportedChainId
   defaultDistributorFee?: number
   defaultController?: IAddress
   defaultRecipients?: Recipient[]
@@ -28,7 +25,6 @@ export interface ICreateSplitProps {
 }
 
 const CreateSplit = ({
-  chainId,
   defaultDistributorFee = DEFAULT_DISTRIBUTOR_FEE,
   defaultController = ADDRESS_ZERO,
   defaultRecipients = DEFAULT_RECIPIENTS,
@@ -39,23 +35,12 @@ const CreateSplit = ({
   onSuccess,
 }: ICreateSplitProps) => {
   return (
-    <ComponentLayout
-      chainId={chainId}
-      width={width}
-      theme={theme}
-      title={'New Split contract'}
-      corner={
-        displayChain
-          ? CHAIN_INFO[chainId] && <ChainLogo chainInfo={CHAIN_INFO[chainId]} />
-          : undefined
-      }
-    >
+    <ComponentLayout width={width} theme={theme} title={'New Split contract'}>
       <CreateSplitForm
         defaultDistributorFee={defaultDistributorFee}
         defaultController={defaultController}
         defaultRecipients={defaultRecipients}
         defaultDistributorFeeOptions={defaultDistributorFeeOptions}
-        chainId={chainId}
         onSuccess={onSuccess}
       />
     </ComponentLayout>
