@@ -49,7 +49,7 @@ const NumberInput = <FormType extends FieldValues>({
   return (
     <div
       className={
-        'relative w-full max-w-xs flex-grow rounded border border-gray-200 ring-gray-500/10 transition focus-within:border-gray-400 dark:border-gray-700 dark:focus-within:border-gray-500'
+        'relative w-full max-w-xs grow rounded border border-gray-200 ring-gray-500/10 transition focus-within:border-gray-400 dark:border-gray-700 dark:focus-within:border-gray-500'
       }
     >
       <Controller
@@ -58,7 +58,7 @@ const NumberInput = <FormType extends FieldValues>({
           <>
             <div className="flex items-center justify-between">
               <NumericFormat
-                className={`w-full flex-grow bg-transparent py-2 px-3 transition focus:outline-none`}
+                className={`w-full grow bg-transparent px-3 py-2 transition focus:outline-none`}
                 decimalScale={decimalScale}
                 suffix={suffix}
                 placeholder={placeholder}
@@ -80,7 +80,7 @@ const NumberInput = <FormType extends FieldValues>({
                 eventName={'clearedNumberInput'}
                 className="absolute inset-y-0 right-0 focus:outline-none"
               >
-                <XMarkIcon className="h-4 w-4" />
+                <XMarkIcon className="size-4" />
               </MiniButton>
             )}
           </>

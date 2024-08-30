@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Blockies from 'react-blockies'
 import { getAddress } from 'viem'
 import { normalize } from 'viem/ens'
@@ -21,7 +22,7 @@ export default function SplitsAvatar({
 
   if (ensAvatar.data) {
     return (
-      <img
+      <Image
         src={ensAvatar.data}
         alt={ensName.data || address}
         width={size}

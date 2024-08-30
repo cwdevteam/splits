@@ -100,7 +100,7 @@ const RecipientSetter = () => {
           compact
           className="border-gray-200 transition hover:border-gray-400 dark:border-gray-700 dark:hover:border-gray-400"
         >
-          <UserPlusIcon className="mr-1 h-3 w-3" />
+          <UserPlusIcon className="mr-1 size-3" />
           Add Recipient
         </SecondaryButton>
         <div className="flex space-x-4">
@@ -108,7 +108,7 @@ const RecipientSetter = () => {
           <DropdownMenu
             menuPosition="left"
             buttonBody={
-              <EllipsisHorizontalIcon className="h-4 w-4 text-gray-600" />
+              <EllipsisHorizontalIcon className="size-4 text-gray-600" />
             }
             menuItems={menuOptions}
           />

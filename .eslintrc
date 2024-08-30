@@ -1,25 +1,28 @@
 {
-  "root": true,
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "no-loops",
-    "prettier"
-  ],
+  "env": {
+    "es6": true
+  },
   "settings": {
-    "react": {
-      "version": "latest"
+    "import/resolver": {
+      "alias": {
+        "map": [["@", "./"]],
+        "extensions": [".js", ".jsx", ".json", ".ts", ".tsx"]
+      }
     }
   },
+  "plugins": ["@typescript-eslint"],
+
   "extends": [
+    "next/core-web-vitals",
+    "plugin:tailwindcss/recommended",
     "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:import/recommended",
+    "prettier"
   ],
   "rules": {
-    "no-loops/no-loops": 2,
-    "no-console": 1,
-    "prettier/prettier": 2
+    "no-prototype-builtins": "off",
+    "@typescript-eslint/no-explicit-any": "off"
   }
 }

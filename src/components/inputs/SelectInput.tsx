@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronDownIcon, LockClosedIcon } from '@heroicons/react/20/solid'
+import { twMerge } from 'tailwind-merge'
 
 type SelectOption<ValueType> = {
   value: ValueType
@@ -48,14 +49,14 @@ const SelectInput = <ValueType,>({
                   : `border-gray-200 dark:border-gray-700`
               }`}
             >
-              <div className="w-full py-2 px-3 text-left">
+              <div className="w-full px-3 py-2 text-left">
                 {hasSelectedOption ? selectedDisplay : emptyText}
               </div>
               {isDisabled ? (
-                <LockClosedIcon className="mr-1.5 h-3 w-3 flex-shrink-0 opacity-25" />
+                <LockClosedIcon className="mr-1.5 size-3 shrink-0 opacity-25" />
               ) : (
                 <ChevronDownIcon
-                  className={`mr-1.5 h-4 w-4 flex-shrink-0 transition ${
+                  className={`mr-1.5 size-4 shrink-0 transition ${
                     open ? `opacity-100` : `opacity-50 group-hover:opacity-100`
                   }`}
                 />
@@ -71,9 +72,7 @@ const SelectInput = <ValueType,>({
               leaveFrom="opacity-100 translate-y-0 "
               leaveTo="opacity-25 -translate-y-1"
             >
-              <Listbox.Options
-                className={`absolute z-40 mt-1 max-h-48 w-full max-w-xs overflow-hidden overflow-y-scroll rounded border border-gray-300 bg-white p-1 focus:outline-none dark:border-gray-600 dark:bg-black md:shadow-lg`}
-              >
+              <Listbox.Options className="absolute z-40 mt-1 max-h-48 w-full max-w-xs overflow-hidden overflow-y-scroll rounded border border-gray-300 bg-white p-1 focus:outline-none dark:border-gray-600 dark:bg-black md:shadow-lg">
                 {options
                   .filter((option) => {
                     if (!hideSelectedValue) return true
@@ -85,9 +84,10 @@ const SelectInput = <ValueType,>({
                         return (
                           <div
                             key={index}
-                            className={`focus:outline-none-sm w-full cursor-pointer rounded-sm px-3 py-2 ${
-                              active && `bg-gray-100 dark:bg-white/5`
-                            }`}
+                            className={twMerge(
+                              'focus:outline-none w-full cursor-pointer rounded-sm px-3 py-2',
+                              active && 'bg-gray-100 dark:bg-white/5',
+                            )}
                           >
                             {option.display(active)}
                           </div>

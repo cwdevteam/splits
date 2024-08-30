@@ -47,7 +47,7 @@ const DropdownMenu = ({
                     active && `bg-blue-500`
                   }`}
                 >
-                  <div className={'flex-grow'}>{item.title}</div>
+                  <div className={'grow'}>{item.title}</div>
                   {item.icon && <div>{item.icon}</div>}
                 </button>
               )}
