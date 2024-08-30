@@ -3,6 +3,7 @@ import { coinbaseWallet } from 'wagmi/connectors'
 import { base, baseSepolia } from 'viem/chains'
 
 const wagmiConfig = createConfig({
+  ssr: true,
   chains: [base, baseSepolia],
   connectors: [
     coinbaseWallet({
