@@ -27,7 +27,6 @@ const AddressInput = <FormType extends FieldValues>({
   inputName,
   placeholder,
   setValue,
-  setError,
   validationFunc,
   onClearInput,
   autoFocus,
@@ -80,7 +79,7 @@ const AddressInput = <FormType extends FieldValues>({
       }
     }
     checkEns()
-  }, [inputVal])
+  }, [inputVal, inputName, setValue])
 
   const clearInput = useCallback(() => {
     const typedAddress = '' as PathValue<FormType, Path<FormType>>
@@ -92,7 +91,7 @@ const AddressInput = <FormType extends FieldValues>({
   return (
     <div
       className={
-        'relative w-full flex-grow rounded border border-gray-200 ring-gray-500/10 transition focus-within:border-gray-400 focus-within:shadow-none dark:border-gray-700 dark:focus-within:border-gray-500'
+        'relative w-full grow rounded border border-gray-200 ring-gray-500/10 transition focus-within:border-gray-400 focus-within:shadow-none dark:border-gray-700 dark:focus-within:border-gray-500'
       }
     >
       <Controller
@@ -109,7 +108,7 @@ const AddressInput = <FormType extends FieldValues>({
           ) : (
             <>
               <input
-                className={`flex w-full flex-grow items-center space-x-2 bg-transparent py-2 px-3 transition focus:outline-none`}
+                className={`flex w-full grow items-center space-x-2 bg-transparent px-3 py-2 transition focus:outline-none`}
                 placeholder={placeholder}
                 autoComplete={'off'}
                 autoFocus={autoFocus}
@@ -123,7 +122,7 @@ const AddressInput = <FormType extends FieldValues>({
                   eventName={'clearedTokenToBeneficiary'}
                   className="absolute inset-y-0 right-0 focus:outline-none"
                 >
-                  <XMarkIcon className="h-4 w-4" />
+                  <XMarkIcon className="size-4" />
                 </MiniButton>
               )}
             </>

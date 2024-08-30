@@ -62,13 +62,13 @@ const TotalAllocated = ({
         </div>
         <div className="relative hidden md:flex">
           {round(totalAllocated, SPLIT_RECIPIENT_MAX_DECIMALS) === 100.0 && (
-            <div className="absolute inset-x-0 inset-y-0 flex items-center justify-center">
-              <CheckIcon className="h-2.5 w-2.5 text-white" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <CheckIcon className="size-2.5 text-white" />
             </div>
           )}
           {round(totalAllocated, SPLIT_RECIPIENT_MAX_DECIMALS) > 100.0 && (
-            <div className="absolute inset-x-0 inset-y-0 flex items-center justify-center">
-              <ExclamationCircleIcon className="h-2.5 w-2.5 text-white" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <ExclamationCircleIcon className="size-2.5 text-white" />
             </div>
           )}
           <ProgressIndicator

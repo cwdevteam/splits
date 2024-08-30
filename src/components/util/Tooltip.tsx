@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import { Transition } from '@headlessui/react'
-import { InformationCircleIcon } from '@heroicons/react/20/solid'
 
 export default function Tooltip({
   children,
@@ -58,7 +57,7 @@ export default function Tooltip({
         leaveTo="opacity-0 scale-90"
         className={`invisible absolute md:visible ${
           positionMap[position ?? 'top']
-        } z-40 transform whitespace-nowrap rounded bg-black/90 px-2 py-1.5 text-xs text-white shadow-md backdrop-blur transition dark:border dark:border-white/10 dark:bg-white/10 dark:backdrop-brightness-[0%]`}
+        } z-40 whitespace-nowrap rounded bg-black/90 px-2 py-1.5 text-xs text-white shadow-md backdrop-blur transition dark:border dark:border-white/10 dark:bg-white/10 dark:backdrop-brightness-0`}
       >
         {content}
       </Transition>
@@ -70,25 +69,5 @@ export default function Tooltip({
         {children}
       </div>
     </div>
-  )
-}
-
-export const InformationLinkTooltip = ({
-  tooltipContent,
-  linkHref,
-  iconSize = '3.5',
-}: {
-  tooltipContent: string | JSX.Element
-  linkHref: string
-  iconSize?: string
-}): JSX.Element => {
-  return (
-    <Tooltip content={tooltipContent}>
-      <a href={linkHref} target="_blank" rel="noreferrer">
-        <InformationCircleIcon
-          className={`h-${iconSize} w-${iconSize} opacity-30 transition hover:opacity-100`}
-        />
-      </a>
-    </Tooltip>
   )
 }

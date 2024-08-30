@@ -104,7 +104,7 @@ const AddressSelectInput = <FormType extends FieldValues>({
           value: 'address',
           display: () => (
             <div className="flex items-center space-x-2">
-              <MagnifyingGlassIcon className="mx-0.5 h-4 w-4" />
+              <MagnifyingGlassIcon className="mx-0.5 size-4" />
               <div>Enter address</div>
             </div>
           ),

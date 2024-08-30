@@ -8,7 +8,6 @@ import { IAddress, Recipient, ICreateSplitForm } from '../../types'
 import RecipientSetter from '../CreateSplit/RecipientSetter'
 import Tooltip from '../util/Tooltip'
 import Button from '../util/Button'
-import { Log } from 'viem'
 import useCreateSplit from '../../../hooks/useCreateSplit'
 import LoginButton from './ConnectButton'
 import CheckBadgeIcon from '@heroicons/react/20/solid/CheckBadgeIcon'
@@ -20,13 +19,11 @@ const CreateSplitForm = ({
   defaultDistributorFee,
   defaultRecipients,
   defaultController,
-  onSuccess,
 }: {
   defaultDistributorFee: number
   defaultController: IAddress
   defaultRecipients: Recipient[]
   defaultDistributorFeeOptions: number[]
-  onSuccess?: (events: Log[]) => void
 }) => {
   const {
     createSplit,
@@ -34,7 +31,7 @@ const CreateSplitForm = ({
     result: split,
   } = useCreateSplit()
   const { switchChainAsync } = useSwitchChain()
-  const { isConnected, chain } = useAccount()
+  const { isConnected } = useAccount()
 
   const form = useForm<ICreateSplitForm>({
     mode: 'onChange',
@@ -61,7 +58,7 @@ const CreateSplitForm = ({
       }
       await createSplit(args)
     },
-    [createSplit, onSuccess],
+    [createSplit, switchChainAsync],
   )
 
   const recipientAllocationTotal = sum(
@@ -74,7 +71,7 @@ const CreateSplitForm = ({
     !isConnected || !isFormValid || !isFullyAllocated || creatingSplit
 
   return (
-    <div className="space-y-8 flex flex-col">
+    <div className="flex flex-col space-y-8">
       <FormProvider {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
           <RecipientSetter />
@@ -101,11 +98,11 @@ const CreateSplitForm = ({
           <>
             <hr />
             <div className="flex flex-col gap-2">
-              <div className="w-full flex justify-center items-center gap-2">
+              <div className="flex w-full items-center justify-center gap-2">
                 Split Created Successfully
                 <CheckBadgeIcon className="size-4 text-green-600" />
               </div>
-              <div className="mx-auto flex justify-center items-center gap-2">
+              <div className="mx-auto flex items-center justify-center gap-2">
                 <ValidAddressDisplay address={split} />
                 <button onClick={() => copyToClipboard(split)}>
                   <DocumentDuplicateIcon className="size-4" />

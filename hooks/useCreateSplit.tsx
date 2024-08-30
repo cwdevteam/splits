@@ -14,9 +14,12 @@ const useCreateSplit = () => {
   const { address } = useAccount()
   const publicClient = usePublicClient({ chainId: CHAIN.id })
 
-  const createSplit = async (args) => {
+  const createSplit = async (args: any) => {
     setLoading(true)
     try {
+      if (!publicClient) {
+        throw new Error('Public client not initialized')
+      }
       const recipients = getRecipientSortedAddressesAndAllocations(
         args.recipients,
       )

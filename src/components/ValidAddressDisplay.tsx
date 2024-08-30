@@ -17,7 +17,7 @@ export default function ValidAddressDisplay({
 }) {
   return (
     <div className="flex w-full">
-      <div className="flex w-full flex-grow items-center space-x-1.5 p-2">
+      <div className="flex w-full grow items-center space-x-1.5 p-2">
         {validAddressDisplay ? (
           validAddressDisplay(address)
         ) : (
@@ -25,7 +25,7 @@ export default function ValidAddressDisplay({
             <SplitsAvatar
               address={address}
               size={18}
-              className={'flex-shrink-0'}
+              className={'shrink-0'}
             />
             {ens ? (
               <div className={'flex'}>{shortenENS(ens)}</div>
@@ -42,7 +42,7 @@ export default function ValidAddressDisplay({
           onClick={onClearInput}
           eventName={'clearedTokenToBeneficiary'}
         >
-          <XMarkIcon className="h-4 w-4" />
+          <XMarkIcon className="size-4" />
         </MiniButton>
       )}
     </div>
